@@ -6,11 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../public/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/bootstrap.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <title><?= $title ?></title>
 </head>
 <body>
+<header>
+    <?php
+    require_once "menu.php";
+    ?>
+</header>
 <div class="container">
     <?= $content ?>
 </div>
