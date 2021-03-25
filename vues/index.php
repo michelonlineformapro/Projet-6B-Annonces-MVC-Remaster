@@ -37,7 +37,7 @@ if($url == "accueil"){
             $form = true;
             if($form){
                 envoiEmailInscription();
-                echo "<p class='alert alert-success'>Vous êtes desormais inscrit, </p>";
+                echo "<p class='alert alert-success'>Merci pour votre inscription, um email de validation vous à été envoyé, merci de validé votre inscription pour acceder a votre tableau de bord </p>";
             }else{
                 echo "<p class='alert alert-danger'>Erreur</p>";
             }
@@ -46,15 +46,22 @@ if($url == "accueil"){
         }
 
     }
+    //FORMULAIRE DE CONNEXION DE UTILISATEUR
+
 }elseif ($url == "connexion_utilisateur"){
     $title = "Annonces -Connexion-";
     require_once "../vues/utilisateurs/connexion_utilisateur.php";
+
+//SI UTILISATEUR EST CONNECTÉ IL ACCEDE A SON CRUD
+
 }elseif ($url == "gestion_annonces" && isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true){
+    $title = "Annonces -Gestion des annonces-";
     require_once "../vues/utilisateurs/gestion_utilisateur.php";
 }
 
-//Espace de connexion de utilisateur
 
+
+//Appel du template
 $content = ob_get_clean();
 require_once "template.php";
 

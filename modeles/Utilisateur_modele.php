@@ -40,7 +40,7 @@ class Utilisateur_modele extends Database_modele
         $stmt->execute();
 
         //Compter les elements dans table et verifié qu'il y a au - une valeur
-        if($stmt->rowCount() > 1){
+        if($stmt->rowCount() >= 1){
             $row =  $stmt->fetch(PDO::FETCH_ASSOC);
             $this->id_utilisateur = $row['id_utilisateur'];
             $this->email_utilisateur = $row['email_utilisateur'];

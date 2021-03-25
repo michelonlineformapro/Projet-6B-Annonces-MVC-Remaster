@@ -8,3 +8,10 @@ html{
 body{
     font-family: 'Oswald', sans-serif;
 }
+
+/******************TABLEAU DE BORD UTILISATEUR************************/
+#user-dashboard{
+    background-color: #016b90!important;
+    color: white;
+    padding: 10px;
+}
