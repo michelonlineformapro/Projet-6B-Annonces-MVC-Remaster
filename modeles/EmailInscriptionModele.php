@@ -66,7 +66,7 @@ class EmailInscriptionModele extends Database_modele
                 //Si ca marche on appel la redirection
                 //Passer les valeur email + password dans url avec get
                 //$redirect = "http://localhost/Projet6_annonces/connexion_utilisateur&email=".$this->email_utilisateur."&password=".$this->password_utilisateur;
-                $redirect = "http://localhost/Projet6_annonces/valider_inscription&id=".$this->id_utilisateur += 1;
+                $redirect = "http://localhost/Projet6_annonces/connexion_utilisateur";
                 //Corp de la page HTML5
                 $mail->Body = '
                      <!DOCTYPE html>

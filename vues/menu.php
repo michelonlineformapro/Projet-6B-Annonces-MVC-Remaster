@@ -12,7 +12,7 @@
                 <a class="nav-link" href="inscription_utilisateur">Inscription</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="test">Connexion</a>
+                <a class="nav-link" href="connexion_utilisateur">Connexion</a>
             </li>
 
         </ul>

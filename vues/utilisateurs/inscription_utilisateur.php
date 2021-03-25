@@ -21,7 +21,7 @@
 
     <div class="form-group">
         <label for="repeat_password">Confirmer le mot de passe</label>
-        <input type="password" placeholder="Confirmer mot de passe" id="repeat_password" class="form-control" required>
+        <input name="password_repeter" type="password" placeholder="Confirmer mot de passe" id="repeat_password" class="form-control" required>
     </div>
 
     <div class="form-group">
