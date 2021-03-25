@@ -21,7 +21,7 @@ class Annonces_modele extends Database_modele
     }
 
 
-    
+
 
 
 
