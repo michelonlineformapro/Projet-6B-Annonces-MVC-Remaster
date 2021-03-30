@@ -10,6 +10,8 @@
     "minimum-stability": "dev",
     "require": {
         "phpmailer/phpmailer": "dev-master",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+        "pagerfanta/pagerfanta": "2.x-dev",
+        "jasongrimes/paginator": "~1.0"
     }
 }

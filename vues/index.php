@@ -1,5 +1,6 @@
 <?php
 session_start();
+require "../vendor/autoload.php";
 ob_start();
 //Appel des controlleurs
 require_once "../controlleurs/AnnoncesControlleur.php";
@@ -86,6 +87,7 @@ if($url == "accueil"){
     $title = "Annonces -Gestion des annonces-";
     //Appel de la page du tableau de bord utilisateur
     afficherLesAnnoncesParUtilisateur();
+    //Rediriger le formulaire de connxion non connecter
 
 }elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "ajouter_annonce"){
 
@@ -106,7 +108,8 @@ if($url == "accueil"){
         $addForm = true;
         if($addForm){
             ajouterAnnonceParUtilisateur($_POST['nom_annonce'], $_POST['description_annonce'], $_POST['prix_annonce'],$_POST['photo_annonce'], $_POST['date_depot'], $_POST['categorie_id'], $_SESSION['id_utilisateur'], $_POST['regions_id']);
-
+        }else{
+            echo "le formulaire est mal rempli";
         }
 
 
@@ -116,11 +119,22 @@ if($url == "accueil"){
 
 }elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "supprimer_annonce" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
     $title = "Annonces.com -SUPPRIMER ANNONCES-";
-    $id = $_GET['id_suppr'];
+    //$id = $_GET['id_suppr'];
     supprimerUneAnnonce1Utilisateur();
 
 
-} elseif ($url === "deconnexion"){
+} elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "editer_annonce" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
+    $title = "Annonces.com -EDITER ANNONCES-";
+    if(isset($_POST['nom_annonce']) && isset($_POST['description_annonce']) && isset($_POST['prix_annonce']) && isset($_POST['photo_annonce']) && isset($_POST['date_depot']) && isset($_POST['categorie_id']) && isset($_POST['utilisateur_id']) && isset($_POST['region_id']) && isset($_POST['id_utilisateur'])){
+
+        editerAnnonceParUrilisateur($_POST['nom_annonce'], $_POST['description_annonce'], $_POST['prix_annonce'], $_POST['photo_annonce'], $_POST['date_depot'], $_POST['categorie_id'], $_POST['utilisateur_id'], $_POST['region_id'], $_POST['id_utilisateur']);
+        echo $_POST['nom_annonce'];
+    }
+
+}
+
+
+elseif ($url === "deconnexion"){
     require_once "../vues/deconnexion.php";
 }
 

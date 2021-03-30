@@ -48,3 +48,14 @@ function supprimerUneAnnonce1Utilisateur(){
     }
 
 }
+
+//Editer une annonce pour un utilisateur
+function editerAnnonceParUrilisateur($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id_annonce){
+    $annonce = new Annonces_modele();
+    $update = $annonce->editerUneAnnonce($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id_annonce);
+    return $update;
+
+
+
+
+}
