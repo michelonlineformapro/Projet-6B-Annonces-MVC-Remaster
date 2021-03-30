@@ -7,11 +7,11 @@ function afficherToutesCatégories(){
     $categorie = new Categories_modele();
     $listeCategorie = $categorie->afficherCategorie();
     ?>
-        <option value="">Choix de la catégories</option>
+        <option class="text-success"  value="">Choix de la catégories :</option>
     <?php
     foreach ($listeCategorie as $cat){
         ?>
-        <option value="<?= $cat['id_categories'] ?>"><?= $cat['type_categorie'] ?></option>
+        <option value="<?= $cat['id_categorie'] ?>"><?= $cat['type_categorie'] ?></option>
         <?php
     }
     return $listeCategorie;

@@ -1,4 +1,4 @@
-<h1 class="text-center text-danger"><b>INSCRIPTION</b></h1>
+<h1 class="text-center text-primary"><b>CONNEXION</b></h1>
 
 <form method="post">
 
@@ -15,7 +15,7 @@
 
 
     <div class="form-group">
-        <button name="btn-connexion" type="submit" class="btn btn-outline-info">S'incrire</button>
+        <button name="btn-connexion" type="submit" class="btn btn-outline-info">Connexion</button>
     </div>
 </form>
 

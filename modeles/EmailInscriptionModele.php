@@ -60,9 +60,7 @@ class EmailInscriptionModele extends Database_modele
             //Execution de la requète
             $ajouterUtlisateur->execute(array($this->nom_utilisateur, $this->email_utilisateur, $this->password_utilisateur));
 
-            //Boucle de parcours des utilisateurs
-            while ($utilisateurs = $recupUtilisateurs->fetch(PDO::FETCH_ASSOC)){
-                $this->id_utilisateur = $utilisateurs['id_utilisateur'];
+
                 //Si ca marche on appel la redirection
                 //Passer les valeur email + password dans url avec get
                 //$redirect = "http://localhost/Projet6_annonces/connexion_utilisateur&email=".$this->email_utilisateur."&password=".$this->password_utilisateur;
@@ -101,7 +99,7 @@ class EmailInscriptionModele extends Database_modele
                 //Conversion de HTML5
                 $mail->body = "MIME-Version: 1.0" . "\r\n";
                 $mail->body .= "Content-type:text/html;charset=utf8" . "\r\n";
-            }
+
 
             //Envoi de email
             $mail->send();

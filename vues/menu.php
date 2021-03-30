@@ -12,7 +12,21 @@
                 <a class="nav-link" href="inscription_utilisateur">Inscription</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="connexion_utilisateur">Connexion</a>
+                <?php
+                if(isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true){
+                    ?>
+                    <a class="nav-link" href="deconnexion">Deconnexion</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="gestion_annonces">Bonjour : <?= $_SESSION['email_utilisateur']  ?></a>
+                    </li>
+                    <?php
+                }else{
+                    ?>
+                    <a class="nav-link" href="connexion_utilisateur">Connexion</a>
+                <?php
+                }
+                ?>
+
             </li>
 
         </ul>

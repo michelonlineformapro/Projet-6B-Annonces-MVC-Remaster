@@ -12,6 +12,15 @@ body{
 /******************TABLEAU DE BORD UTILISATEUR************************/
 #user-dashboard{
     background-color: #016b90!important;
-    color: white;
+    color: chocolate;
     padding: 10px;
+
+}
+#annonce-card{
+    height: 100%;
+
+}
+.card-img-top{
+    padding: 20px;
+    border-radius: 10px;
 }

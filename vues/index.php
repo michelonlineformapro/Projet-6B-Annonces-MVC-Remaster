@@ -4,6 +4,8 @@ ob_start();
 //Appel des controlleurs
 require_once "../controlleurs/AnnoncesControlleur.php";
 require_once "../controlleurs/UtilisateursControlleur.php";
+require_once "../controlleurs/CategoriesControlleur.php";
+require_once "../controlleurs/RegionsControlleur.php";
 
 //Verification de l'existance de la super globale $_GET[''] dans url
 //index.php?url=accueil (toutes vos routes)
@@ -80,13 +82,46 @@ if($url == "accueil"){
 
 //SI UTILISATEUR EST CONNECTÉ IL ACCEDE A SON CRUD
 //Check la connexion de l'utilisateur
-}elseif ($url == "gestion_annonces" && isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true){
+}elseif ($url === "gestion_annonces" && isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true){
     $title = "Annonces -Gestion des annonces-";
     //Appel de la page du tableau de bord utilisateur
-    require_once "../vues/utilisateurs/gestion_utilisateur.php";
-}elseif ($url === "ajouter_annonce"){
+    afficherLesAnnoncesParUtilisateur();
+
+}elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "ajouter_annonce"){
+
     $title = "Annonces -Ajouter des annonces-";
     require_once "../vues/annonces/ajouter_annonce.php";
+    $addForm = false;
+    /*
+    var_dump($_POST['nom_annonce']);
+    var_dump($_POST['description_annonce']);
+    var_dump($_POST['prix_annonce']);
+    var_dump($_POST['date_depot']);
+    var_dump($_FILES['photo_annonce']);
+    var_dump($_POST['categorie_id']);
+    var_dump($_SESSION['id_utilisateur']);
+    var_dump($_POST['regions_id']);
+    */
+    if(isset($_POST['nom_annonce']) && isset($_POST['description_annonce']) && isset($_POST['prix_annonce']) && isset($_POST['photo_annonce']) && isset($_POST['date_depot'])  && isset($_POST['categorie_id']) && $_SESSION['id_utilisateur'] && isset($_POST['regions_id'])){
+        $addForm = true;
+        if($addForm){
+            ajouterAnnonceParUtilisateur($_POST['nom_annonce'], $_POST['description_annonce'], $_POST['prix_annonce'],$_POST['photo_annonce'], $_POST['date_depot'], $_POST['categorie_id'], $_SESSION['id_utilisateur'], $_POST['regions_id']);
+
+        }
+
+
+    }else{
+        echo "<p class='alert alert-danger'>Une erreur est survenue, merci de vérifié tous les champs du formulaire !</p>";
+    }
+
+}elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "supprimer_annonce" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
+    $title = "Annonces.com -SUPPRIMER ANNONCES-";
+    $id = $_GET['id_suppr'];
+    supprimerUneAnnonce1Utilisateur();
+
+
+} elseif ($url === "deconnexion"){
+    require_once "../vues/deconnexion.php";
 }
 
 
