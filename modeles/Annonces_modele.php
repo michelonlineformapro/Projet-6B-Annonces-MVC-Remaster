@@ -30,41 +30,56 @@ class Annonces_modele extends Database_modele
         //Connexion a PDO
         $db = $this->getPDO();
 
-        //Recup de la page courante
-        if(isset($_GET['page']) && !empty($_GET['page'])){
-            $currentPage = (int) strip_tags($_GET['page']);
-        }else{
-            $currentPage = 1;
-        }
-
-        //Nombre total d'annonce
-        $countAnnonce = "SELECT COUNT(*) AS id_annonce FROM annonces";
-        //Requète préparée
-
-        $query = $db->prepare($countAnnonce);
-        $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        $nbrAnnonce = (int) $result['id_annonce'];
-        //Nombre d'annonce par page
-        $parPage = 10;
-        $pages = ceil($nbrAnnonce / $parPage);
-        //Calcul de la 1er annonce de la page
-        $premier = ($currentPage * $parPage) - $parPage;
-
         //Requète SQL + jointure
-        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE utilisateur_id = ? DESC LIMIT :premier, :parPage";
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE utilisateur_id = ?";
         //Recup de id utilisateur
         $this->id_annonce = $_SESSION['id_utilisateur'];
         //Requète préparée
         $request = $db->prepare($sql);
         //Lié les paramètres
         $request->bindParam(1, $this->id_annonce);
+
         //Execution de la requète
         $request->execute();
         //Retourne un objet de resultats
+
+
         return $request->fetchAll(PDO::FETCH_ASSOC);
 
+    }
+
+    public function afficherDetailsUneAnnonce(){
+        //Coonexion PDO
+        $db = $this->getPDO();
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE id_annonce = ?";
+        //Recup de id utilisateur
+        $this->id_annonce = $_GET['id_details'];
+        //Requète préparée
+        $request = $db->prepare($sql);
+        //Lié les paramètres
+        $request->bindParam(1, $this->id_annonce);
+
+        //Execution de la requète
+        $request->execute();
+        //Retourne un objet de resultats
+        $details = $request->fetch(PDO::FETCH_ASSOC);
+        return $details;
+
+
+    }
+
+    public function compterLesAnnonces(){
+        $db = $this->getPDO();
+        $limite = 2;
+        //Requète qui compte le nombre d'entrée
+        $resultFoundRows = $db->query('SELECT COUNT(id_annonce) FROM annonces');
+        /* On doit extraire le nombre du jeu de résultat */
+        $nombredElementsTotal = $resultFoundRows->fetchColumn();
+        /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
+     * vers la précédente. On va donc ne l'afficher que si on est sur une autre
+     * page que la première */
+        $nombreDePages = ceil($nombredElementsTotal / $limite);
+        return $nombreDePages;
     }
 
     ////////////////////////////////////POUR LES UTILISATEURS INSCRITS/////////////////////////

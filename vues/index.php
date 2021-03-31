@@ -84,12 +84,19 @@ if($url == "accueil"){
 //SI UTILISATEUR EST CONNECTÉ IL ACCEDE A SON CRUD
 //Check la connexion de l'utilisateur
 }elseif ($url === "gestion_annonces" && isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true){
+
     $title = "Annonces -Gestion des annonces-";
     //Appel de la page du tableau de bord utilisateur
     afficherLesAnnoncesParUtilisateur();
     //Rediriger le formulaire de connxion non connecter
 
-}elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "ajouter_annonce"){
+}elseif ($url === "details_annonce" && isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && isset($_GET['id_details']) && $_GET['id_details'] > 0){
+    $title = "Annonce.com -DETAILS ANNONCES-";
+    afficherDetails();
+}
+
+
+elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "ajouter_annonce"){
 
     $title = "Annonces -Ajouter des annonces-";
     require_once "../vues/annonces/ajouter_annonce.php";

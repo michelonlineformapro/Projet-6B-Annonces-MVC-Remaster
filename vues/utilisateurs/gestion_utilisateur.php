@@ -11,7 +11,7 @@ if (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateu
     <div class="row mt-3">
         <?php
 
-        foreach ($annonceParUtilisateur as $data) {
+        foreach ($nombreDePages as $data) {
 
             ?>
             <div class="col-sm-12 col-lg-4 mt-2">
@@ -43,6 +43,8 @@ if (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateu
                                 data-target="#editer_annonce&id_suppr=<?= $data['id_annonce'] ?>">
                             Editer cette annonce
                         </button>
+
+                        <a href="details_annonce&id_details=<?= $data['id_annonce'] ?>" class="btn btn-success">Détails de l' annonce</a>
 
                         <!--MODAL EDITER UNE ANNONCE-->
                         <div class="modal fade" id="editer_annonce&id_suppr=<?= $data['id_annonce'] ?>" tabindex="-1"
@@ -205,15 +207,15 @@ if (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateu
                         </div>
                     </div>
                 </div>
-
+            </div>
             <?php
 
         }
         ?>
-            </div>
+
+
+
         <?php
-
-
         } else {
             header("Location: connexion_utilisateur");
         }

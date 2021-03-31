@@ -21,9 +21,18 @@ function afficherLesAnnonces(){
 function afficherLesAnnoncesParUtilisateur(){
     //Insatnce du de la classe Annonce
     $annonce = new Annonces_modele();
-    $annonceParUtilisateur = $annonce->afficherAnnoneParUtilisateur();
+    $nombreDePages = $annonce->afficherAnnoneParUtilisateur();
     require_once "../vues/utilisateurs/gestion_utilisateur.php";
 }
+
+//Affiche les details d'une annone d'un utilisateur
+function afficherDetails(){
+    //Instance de la classe Annonce
+    $annonce = new Annonces_modele();
+    $details = $annonce->afficherDetailsUneAnnonce();
+    require_once "../vues/annonces/details_annonce.php";
+}
+
 
 //Ajouter une annonce pour 1 utlisateur
 function ajouterAnnonceParUtilisateur($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id){
