@@ -14,18 +14,71 @@ class Annonces_modele extends Database_modele
     private $utilisateur_id;
     private $region_id;
 
-    /////////////////////////////////////POUR LES VISITEURS//////////////////////////////////
 
-    /**
-     * @return false|PDOStatement
-     */
+    /////////////////////////////////////POUR LES VISITEURS//////////////////////////////////
     public function afficherToutesAnnonces(){
         $db = $this->getPDO();
-        $sql = "SELECT * FROM annonces";
+
+        //Appel de la clé $_GET['page'] referencée dans le routeur
+        //index.php?url=quelque_chose?page=1
+
+        if(isset($_GET['page'])){
+            $page = $_GET['page'];
+        }else{
+            $page = "page=1";
+        }
+        //Nombre d'annonce affichée par page
+        $limite = 3;
+        //Valeur de depart page courante - 1 * nombre d'annonce a afficher
+        $debut = ($page - 1) * $limite;
+
+        //Requète SQL + limite
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions ORDER BY id_annonce ASC LIMIT {$limite} OFFSET {$debut}";
         $stmt = $db->query($sql);
+
+        //Requète qui compte le nombre d'entrée
+        $resultFoundRows = $db->query('SELECT COUNT(id_annonce) FROM annonces');
+        /* On doit extraire le nombre du jeu de résultat */
+        $nombredElementsTotal = $resultFoundRows->fetchColumn();
+        /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
+        * vers la précédente. On va donc ne l'afficher que si on est sur une autre
+        * page que la première */
+        $nombreDePages = ceil($nombredElementsTotal / $limite);
+
+
+        ?>
+        <div class="jumbotron justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <?php
+                    if ($page > 1):
+                        ?><li class="page-item"><a class="page-link" href="?page=<?php echo $page - 1; ?>">Page précédente</a></li><?php
+                    endif;
+
+                    /* On va effectuer une boucle autant de fois que l'on a de pages */
+                    for ($i = 1; $i <= $nombreDePages; $i++):
+                        ?><li class="page-item"><a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li><?php
+                    endfor;
+
+                    /* Avec le nombre total de pages, on peut aussi masquer le lien
+                     * vers la page suivante quand on est sur la dernière */
+                    if ($page < $nombreDePages):
+                        ?><li class="page-item"><a class="page-link" href="?page=<?php echo $page + 1; ?>">Page suivante</a></li><?php
+                    endif;
+                    ?>
+
+                </ul>
+            </nav>
+        </div>
+
+        <?php
+
         return $stmt;
     }
 
+    /////////////////////////////////////POUR LES UTILISATEURS INSCRITS//////////////////////////////////
+
+    //AFFICHE TOUTES LES ANNONCES PAR UTILISATEUR////
     public function afficherAnnoneParUtilisateur(){
         //Connexion a PDO
         $db = $this->getPDO();
@@ -48,6 +101,7 @@ class Annonces_modele extends Database_modele
 
     }
 
+    //AFFICHE LES DETAILS 1 ANNONCES PAR UTILISATEUR///
     public function afficherDetailsUneAnnonce(){
         //Coonexion PDO
         $db = $this->getPDO();
@@ -64,9 +118,9 @@ class Annonces_modele extends Database_modele
         //Retourne un objet de resultats
         $details = $request->fetch(PDO::FETCH_ASSOC);
         return $details;
-
-
     }
+
+    //COMPTE LE NOMBRE D'ANNONCE///
 
     public function compterLesAnnonces(){
         $db = $this->getPDO();
@@ -82,7 +136,6 @@ class Annonces_modele extends Database_modele
         return $nombreDePages;
     }
 
-    ////////////////////////////////////POUR LES UTILISATEURS INSCRITS/////////////////////////
 
     //Passage de paramètres dans la methode et assignation au variables du formulaire
     public function ajouterUneAnnonce($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id){
@@ -144,7 +197,7 @@ class Annonces_modele extends Database_modele
     }
 
     //Editer une annonce par utilisateur
-    public function editerUneAnnonce($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id_annonce){
+    public function editerUneAnnonce($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id){
         $db = $this->getPDO();
         //Les propriétés privée
         $this->nom_annonce = $nom_annonce;
@@ -155,17 +208,17 @@ class Annonces_modele extends Database_modele
         $this->categorie_id = $categorie_id;
         $this->utilisateur_id = $utilisateur_id;
         $this->region_id = $region_id;
-        $this->id_annonce = $id_annonce;
+        $this->id_annonce = $id;
 
         $nom_annonce = $_POST['nom_annonce'];
 
         //La requète sql
         $sql = "UPDATE `annonces` SET `nom_annonce`= ?,`description_annonce`= ?,`prix_annonce`= ?,`photo_annonce`= ?,`date_depot`= ?,`categorie_id`= ?,`utilisateur_id`= ?,`regions_id`= ? WHERE id_annonce = ?";
         //La requète préparée
-        $update = $db->prepare($sql);
+        $req = $db->prepare($sql);
         //Execution de la requète
-        $update->execute($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id_annonce);
-        return $update;
+        $req->execute(array($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id));
+        return $req;
     }
 
 }

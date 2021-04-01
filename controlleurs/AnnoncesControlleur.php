@@ -4,15 +4,14 @@ require_once "../modeles/Annonces_modele.php";
 
 //POUR LES VISITEURS//////
 function afficherLesAnnonces(){
+
     //Instance de la classe Annonce
     $annonce = new Annonces_modele();
     //stock dansune variable l'appel de la methode conernée
     $recupAnnonce = $annonce->afficherToutesAnnonces();
-    if($recupAnnonce){
-        require_once "../vues/accueil.php";
-    }else{
-        die();
-    }
+    require_once "../vues/accueil.php";
+
+
 }
 
 //POUR LES UTILISATEURS////////
@@ -59,12 +58,14 @@ function supprimerUneAnnonce1Utilisateur(){
 }
 
 //Editer une annonce pour un utilisateur
-function editerAnnonceParUrilisateur($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id_annonce){
+function editerAnnonceParUrilisateur($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id){
+
     $annonce = new Annonces_modele();
-    $update = $annonce->editerUneAnnonce($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $id_annonce);
-    return $update;
-
-
-
-
+    $_GET['id'] = $id;
+    $update = $annonce->editerUneAnnonce($nom_annonce, $description_annonce, $prix_annonce, $date_depot, $photo_annonce, $categorie_id, $utilisateur_id, $region_id, $_GET['id_edit']);
+    if($update){
+        header("Location: gestion_annonces");
+    }else{
+        echo "<p class='alert alert-danger'>Une erreur est survenue durant l'ajout de votre annonce merci de réessayé !</p>";
+    }
 }

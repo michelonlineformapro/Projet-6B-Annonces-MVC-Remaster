@@ -32,7 +32,7 @@ if (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateu
                 Editer cette annonce
             </button>
 
-            <a href="gestion_annonce" type="button" class="btn btn-warning">Retour</a>
+            <a href="gestion_annonces" type="button" class="btn btn-outline-warning">Retour</a>
 
             <!--MODAL EDITER UNE ANNONCE-->
             <div class="modal fade" id="editer_annonce&id_suppr=<?= $details['id_annonce'] ?>" tabindex="-1"

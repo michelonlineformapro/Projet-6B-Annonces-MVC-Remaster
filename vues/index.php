@@ -12,16 +12,23 @@ require_once "../controlleurs/RegionsControlleur.php";
 //index.php?url=accueil (toutes vos routes)
 
 
-//PAGE ACCUEIL
+//Creation de la cle url = url
 if(isset($_GET['url'])){
     $url = $_GET['url'];
 }else{
     $url = "accueil";
 }
+//Creation de la cle url = page
+if(isset($_GET['page'])){
+    $page = $_GET['page'];
+}else{
+    $page = "";
+}
 
-//Si la cles $url n'a pas de valeur par default on redirige vers la page d'accueil
+//Si la cles $url n'a pas de valeur par default on redirige vers la page d'accueil?page=1 pour la pagination de toutes les annonces
 if($url === ""){
-    $url = "accueil";
+    $url = "accueil?page=1";
+    $page = "";
 }
 
 /**
@@ -119,7 +126,6 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
             echo "le formulaire est mal rempli";
         }
 
-
     }else{
         echo "<p class='alert alert-danger'>Une erreur est survenue, merci de vérifié tous les champs du formulaire !</p>";
     }
@@ -130,12 +136,13 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
     supprimerUneAnnonce1Utilisateur();
 
 
-} elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "editer_annonce" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
+} elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "editer_annonce" && isset($_GET['id_edit']) && $_GET['id_edit'] > 0){
     $title = "Annonces.com -EDITER ANNONCES-";
-    if(isset($_POST['nom_annonce']) && isset($_POST['description_annonce']) && isset($_POST['prix_annonce']) && isset($_POST['photo_annonce']) && isset($_POST['date_depot']) && isset($_POST['categorie_id']) && isset($_POST['utilisateur_id']) && isset($_POST['region_id']) && isset($_POST['id_utilisateur'])){
-
-        editerAnnonceParUrilisateur($_POST['nom_annonce'], $_POST['description_annonce'], $_POST['prix_annonce'], $_POST['photo_annonce'], $_POST['date_depot'], $_POST['categorie_id'], $_POST['utilisateur_id'], $_POST['region_id'], $_POST['id_utilisateur']);
-        echo $_POST['nom_annonce'];
+    require_once "../vues/annonces/editer_annonce.php";
+    var_dump($_GET['id_edit']);
+    if(isset($_POST['nom_annonce']) && isset($_POST['description_annonce']) && isset($_POST['prix_annonce']) && isset($_POST['photo_annonce']) && isset($_POST['date_depot']) && isset($_POST['categorie_id']) && $_SESSION['id_utilisateur'] && isset($_POST['regions_id'])){
+        var_dump($_POST['nom_annonce']);
+        editerAnnonceParUrilisateur($_POST['nom_annonce'], $_POST['description_annonce'], $_POST['prix_annonce'], $_POST['photo_annonce'], $_POST['date_depot'], $_POST['categorie_id'], $_SESSION['id_utilisateur'], $_POST['regions_id'], $_GET['id_edit']);
     }
 
 }
