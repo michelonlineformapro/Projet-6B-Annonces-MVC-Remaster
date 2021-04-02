@@ -97,7 +97,6 @@ if (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateu
                 </div>
             </div>
             <?php
-
         }
         ?>
 

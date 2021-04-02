@@ -33,7 +33,7 @@ class Annonces_modele extends Database_modele
         $debut = ($page - 1) * $limite;
 
         //Requète SQL + limite
-        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions ORDER BY id_annonce ASC LIMIT {$limite} OFFSET {$debut}";
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions ORDER BY Rand() ASC LIMIT {$limite} OFFSET {$debut}";
         $stmt = $db->query($sql);
 
         //Requète qui compte le nombre d'entrée

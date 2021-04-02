@@ -22,11 +22,11 @@
 </header>
 <div class="container">
     <?= $content ?>
-    <footer>
+    <div class="container">
         <?php
         require_once "footer.php";
         ?>
-    </footer>
+    </div>
 </div>
 
 

@@ -7,6 +7,7 @@ require_once "../controlleurs/AnnoncesControlleur.php";
 require_once "../controlleurs/UtilisateursControlleur.php";
 require_once "../controlleurs/CategoriesControlleur.php";
 require_once "../controlleurs/RegionsControlleur.php";
+require_once "../controlleurs/AdministrationControlleur.php";
 
 //Verification de l'existance de la super globale $_GET[''] dans url
 //index.php?url=accueil (toutes vos routes)
@@ -97,7 +98,7 @@ if($url == "accueil"){
     afficherLesAnnoncesParUtilisateur();
     //Rediriger le formulaire de connxion non connecter
 
-}elseif ($url === "details_annonce" && isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && isset($_GET['id_details']) && $_GET['id_details'] > 0){
+}elseif ($url === "details_annonce" && isset($_GET['id_details']) && $_GET['id_details'] > 0){
     $title = "Annonce.com -DETAILS ANNONCES-";
     afficherDetails();
 }
@@ -144,8 +145,16 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
         var_dump($_POST['nom_annonce']);
         editerAnnonceParUrilisateur($_POST['nom_annonce'], $_POST['description_annonce'], $_POST['prix_annonce'], $_POST['photo_annonce'], $_POST['date_depot'], $_POST['categorie_id'], $_SESSION['id_utilisateur'], $_POST['regions_id'], $_GET['id_edit']);
     }
+//PAGE DE CONNEXION A ADMINISTRATION
+}elseif ($url == "R3s6n9sFC"){
+    require_once "../vues/administration/connexion_administration.php";
 
+
+
+}elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true && $url == "espace_admin"){
+    require_once "../vues/administration/espace_administration.php";
 }
+
 
 
 elseif ($url === "deconnexion"){
