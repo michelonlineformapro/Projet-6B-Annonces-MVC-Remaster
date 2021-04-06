@@ -8,6 +8,9 @@ class Administration_modele extends Database_modele
     private $email_admin;
     private $password_admin;
 
+    //Utilisateur
+    private $id_utilisateur;
+
     //Coonexion de l'adminsitarteur
     public function connexionAdministration(){
         //Connexiona PDO
@@ -47,14 +50,55 @@ class Administration_modele extends Database_modele
 
     }
 
-    //Afficher tous les valeurs de la tablea administration
-
+    //Afficher tous les valeurs de la table administration
     public function  afficherTableAdmin(){
         $db = $this->getPDO();
-
         $sql = "SELECT * FROM administration";
         $datas = $db->query($sql);
         return $datas;
     }
 
+    //Supprimer un uAdmin
+    public function supprimerUnAdministrateur(){
+        $db = $this->getPDO();
+        $sql = "DELETE FROM administration WHERE id_admin = ?";
+        $stmt = $db->prepare($sql);
+        $this->id_admin = $_GET['id_suppr'];
+        //Lié les paramètre (ici id de annonce a $_GET id url)
+        $stmt->bindParam(1, $this->id_admin);
+        //Execution de la requète
+        $deleteAdmin = $stmt->execute();
+        //Retourne l'objet avec son id
+        return $deleteAdmin;
+    }
+
+    //AJOUTER UN ADMIN
+    public function ajouterUnAdministrateur($email_admin, $password_admin){
+        $db = $this->getPDO();
+        $sql = "INSERT INTO administration (email_admin, password_admin) VALUES (?,?)";
+
+        $this->email_admin = $email_admin;
+        $this->password_admin = $password_admin;
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam(1, $email_admin);
+        $stmt->bindParam(2, $password_admin);
+
+        $stmt->execute(array($email_admin, $password_admin));
+        return $stmt;
+
+    }
+
+
+    /**********************TABLE ANNONCES***********************/
+    public function afficherTableAnnonce(){
+        $db = $this->getPDO();
+        //Requète SQL + jointure
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions ORDER BY utilisateur_id ASC";
+        $request = $db->query($sql);
+        return $request;
+    }
+
 }
+

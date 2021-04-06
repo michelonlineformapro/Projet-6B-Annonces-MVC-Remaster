@@ -103,7 +103,7 @@ if($url == "accueil"){
     afficherDetails();
 }
 
-
+//AJOUTER UNE ANNONCE
 elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "ajouter_annonce"){
 
     $title = "Annonces -Ajouter des annonces-";
@@ -130,13 +130,13 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
     }else{
         echo "<p class='alert alert-danger'>Une erreur est survenue, merci de vérifié tous les champs du formulaire !</p>";
     }
-
+//SUPPRIMER UNE ANNONCE
 }elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "supprimer_annonce" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
     $title = "Annonces.com -SUPPRIMER ANNONCES-";
     //$id = $_GET['id_suppr'];
     supprimerUneAnnonce1Utilisateur();
 
-
+//EDITER UNE ANNONCE
 } elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "editer_annonce" && isset($_GET['id_edit']) && $_GET['id_edit'] > 0){
     $title = "Annonces.com -EDITER ANNONCES-";
     require_once "../vues/annonces/editer_annonce.php";
@@ -150,17 +150,26 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
     $title = "Annonce.com -CONNEXION ADMINISTRATION-";
     require_once "../vues/administration/connexion_administration.php";
 
-
-
+    //ESPACES ADMINISTRATION
 }elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true && $url == "espace_admin"){
     $title = "Annonce.com -ESPACE ADMINISTRATION-";
     afficherTouteLesTables();
+//SUPPRIMER ADMIN
+}elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "supprimer_admin" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0) {
+    $title = "Annonces.com -SUPPRIMER ADMIN-";
+    //$id = $_GET['id_suppr'];
+    supprimerAdmin();
+//AJOUTER UN ADMIN
 
-}
+}elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "ajouter_admin"){
+    $title = "Annonces -Ajouter un administrateur-";
+    require_once "../vues/administration/ajouter_admin.php";
+    if(isset($_POST['email_admin']) && isset($_POST['password_admin'])){
+        ajouterAdmin($_POST['email_admin'], $_POST['password_admin']);
+    }
 
 
-
-elseif ($url === "deconnexion"){
+} elseif ($url === "deconnexion"){
     require_once "../vues/deconnexion.php";
 }
 

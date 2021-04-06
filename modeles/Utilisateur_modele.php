@@ -11,7 +11,15 @@ class Utilisateur_modele extends Database_modele
     private $email_utilisateur;
     private $password_utilisateur;
 
-    /*
+
+    //Lister tous les utilisateur
+    public function utilisateurs(){
+        $db = $this->getPDO();
+        $sql = "SELECT *  FROM utilisateurs";
+        $users = $db->query($sql);
+        return $users;
+    }
+
     public function utilisateurParId($id){
         $db = $this->getPDO();
         $sql = "SELECT *  FROM utilisateurs WHERE id_utilisateur = ?";
@@ -21,7 +29,7 @@ class Utilisateur_modele extends Database_modele
         $user_id = $stmt->fetch();
         return $user_id;
     }
-    */
+
 
     public function connecterUnUtilisateur(){
         //Connexion a PDO
