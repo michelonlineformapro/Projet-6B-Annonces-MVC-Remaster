@@ -47,4 +47,14 @@ class Administration_modele extends Database_modele
 
     }
 
+    //Afficher tous les valeurs de la tablea administration
+
+    public function  afficherTableAdmin(){
+        $db = $this->getPDO();
+
+        $sql = "SELECT * FROM administration";
+        $datas = $db->query($sql);
+        return $datas;
+    }
+
 }

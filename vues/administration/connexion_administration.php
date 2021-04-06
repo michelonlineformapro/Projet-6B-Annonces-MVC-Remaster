@@ -1,6 +1,6 @@
 <h1 class="text-center text-primary"><b>CONNEXION ADMINISTRATION</h1>
 
-<div style="background: darkred; padding: 20px">
+<div style="background: #965b15; padding: 20px">
 
 <form method="post">
 

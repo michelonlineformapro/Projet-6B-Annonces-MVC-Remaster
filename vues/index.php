@@ -147,12 +147,15 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
     }
 //PAGE DE CONNEXION A ADMINISTRATION
 }elseif ($url == "R3s6n9sFC"){
+    $title = "Annonce.com -CONNEXION ADMINISTRATION-";
     require_once "../vues/administration/connexion_administration.php";
 
 
 
 }elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true && $url == "espace_admin"){
-    require_once "../vues/administration/espace_administration.php";
+    $title = "Annonce.com -ESPACE ADMINISTRATION-";
+    afficherTouteLesTables();
+
 }
 
 

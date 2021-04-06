@@ -77,9 +77,8 @@
             echo "<p class='alert alert-danger'>Le fichier est invalide seul les format .png, .jpg, .bmp, .svg, .webp sont autorisé !</p>";
         }
 
-
-
     }else{
         header("location: connexion_utilisateur");
     }
+
 ?>
