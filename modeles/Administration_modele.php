@@ -11,6 +11,10 @@ class Administration_modele extends Database_modele
     //Utilisateur
     private $id_utilisateur;
 
+    //Categorie
+    private $id_categorie;
+    private $type_catégorie;
+
     //Coonexion de l'adminsitarteur
     public function connexionAdministration(){
         //Connexiona PDO
@@ -58,7 +62,7 @@ class Administration_modele extends Database_modele
         return $datas;
     }
 
-    //Supprimer un uAdmin
+    //Supprimer un Admin
     public function supprimerUnAdministrateur(){
         $db = $this->getPDO();
         $sql = "DELETE FROM administration WHERE id_admin = ?";
@@ -90,8 +94,8 @@ class Administration_modele extends Database_modele
 
     }
 
-
     /**********************TABLE ANNONCES***********************/
+    //Afficher toutes les annonces
     public function afficherTableAnnonce(){
         $db = $this->getPDO();
         //Requète SQL + jointure
@@ -99,6 +103,81 @@ class Administration_modele extends Database_modele
         $request = $db->query($sql);
         return $request;
     }
+
+    //Supprimer une annonce d'un utilisateur
+    public function supprimerAnnonceUtilisateur(){
+        //Appel de  la classe mere et de la methode PDO
+        $db = $this->getPDO();
+        //Requète sql
+        $sql = 'DELETE FROM `annonces` WHERE `id_annonce` = ?';
+        //Creation de la requète péparée
+        $stmt = $db->prepare($sql);
+        $this->id_annonce = $_GET['id_suppr'];
+        //Lié les paramètre (ici id de annonce a $_GET id url)
+        $stmt->bindParam(1, $this->id_annonce);
+        //Execution de la requète
+        $delete = $stmt->execute();
+        //Retourne l'objet avec son id
+        return $delete;
+    }
+
+    /***********************REGIONS*********************/
+    public function afficheRegion(){
+        $db = $this->getPDO();
+        $sql = "SELECT * FROM regions";
+        $stmt = $db->query($sql);
+        return $stmt;
+    }
+    /***********************REGIONS**********************/
+    public function afficherCategories(){
+        $db = $this->getPDO();
+        $sql = "SELECT * FROM categories";
+        $stmt = $db->query($sql);
+        return $stmt;
+    }
+    /***********************UTILISTEURS*******************/
+    public function afficherTousUtilisateur(){
+        $db = $this->getPDO();
+        $sql = "SELECT * FROM utilisateurs";
+
+        $stmt = $db->query($sql);
+        return $stmt;
+    }
+    //Supprimer un utilisateur
+    public function supprimerUtilisateurAdmin(){
+        $db = $this->getPDO();
+        $sql = "DELETE FROM utilisateurs WHERE id_utilisateurs = ?";
+        $stmt = $db->prepare($sql);
+        $this->id_utilisateur = $_GET['id_suppr'];
+        $stmt->bindParam(1, $this->id_utilisateur);
+        $delete = $stmt->execute();
+        return $delete;
+    }
+
+    public function supprimerUneCategorie(){
+        $db = $this->getPDO();
+        $sql = "DELETE FROM categories WHERE id_categorie = ?";
+        $stmt = $db->prepare($sql);
+        $this->id_categorie = $_GET['id_suppr'];
+        $stmt->bindParam(1, $this->id_categorie);
+        $delete = $stmt->execute();
+        return $delete;
+    }
+
+    public function ajouterCatégorieAdmin($type_categorie){
+        $db = $this->getPDO();
+        $sql = "INSERT INTO categories (type_categorie) VALUES (?)";
+
+        $this->type_catégorie = $type_categorie;
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(1, $type_categorie);
+
+        $stmt->execute(array($type_categorie));
+        return $stmt;
+    }
+
+
 
 }
 

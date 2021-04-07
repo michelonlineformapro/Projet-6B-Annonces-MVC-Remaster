@@ -3,11 +3,12 @@
 </head>
 
 <?php
-if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true) {
+if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true) {
     ?>
     <h1 class="text-success">ESPACE ADMINISTRATION</h1>
     <h2 class="text-secondary">BIENVENUE <?= $_SESSION['email_admin'] ?></h2>
     <a href="deconnexion" class="btn btn-outline-danger mt-3">Deconnexion espace administration</a>
+    <!--TABLE ADMIN-->
     <div class="jumbotron mt-3">
         <h3 class="text-warning">TABLE DES ADMINISTRATEURS :</h3>
         <a href="ajouter_admin" class="btn btn-outline-success">Ajouter un administrateur</a>
@@ -66,7 +67,69 @@ if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true)
             </tbody>
         </table>
     </div>
+    <!--TABLE UTILISTEURS-->
 
+    <div class="jumbotron mt-3">
+        <h3 class="text-warning">TABLE DES UTILISATEURS :</h3>
+        <table id="tableUtilisateurs" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero de telephone</th>
+                <th>Email</th>
+                <th>Mot de passe</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($tableUtilisateurs as $data){
+                ?>
+                <tr>
+                    <td>ID: <?= $data['id_utilisateur'] ?></td>
+                    <td><?= $data['nom_utilisateur'] ?></td>
+                    <td><?= $data['email_utilisateur'] ?></td>
+                    <td><?= $data['password_utilisateur'] ?></td>
+                    <td>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#supprimer_utilisateur&id_suppr=<?= $data['id_utilisateur'] ?>">
+                            Supprimer
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="supprimer_utilisateur&id_suppr=<?= $data['id_utilisateur'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>ID : <?= $data['id_utilisateur'] ?></p>
+                                        <p>N° Téléphone : <?= $data['nom_utilisateur'] ?></p>
+                                        <p>Email : <?= $data['email_utilisateur'] ?></p>
+                                        <p>Mot de passe : <?= $data['password_utilisateur'] ?></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <a href="supprimer_admin_autilisateur&id_suppr=<?= $admin['id_admin'] ?>" type="button"
+                                           class="btn btn-primary">Confirmer la suppression</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!--TABLE ANNONCES-->
     <div class="jumbotron mt-3">
 
             <h3 class="text-warning">TABLE DES ANNONCES :</h3>
@@ -143,18 +206,98 @@ if (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] == true)
                 </tbody>
             </table>
         </div>
-
+    <!-- Tabulator -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <div class="jumbotron mt-3">
+        <h3 class="text-warning">TABLE DES REGIONS :</h3>
+            <table id="tableRegion" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom de la région</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach ($tableRegion as $data){
+                ?>
+                    <tr>
+                        <td>ID: <?= $data['id_regions'] ?></td>
+                        <td><?= $data['nom_region'] ?></td>
+                    </tr>
+                <?php
+                }
+                ?>
+                </tbody>
+            </table>
+    </div>
+
+    <div class="jumbotron mt-3">
+        <h3 class="text-warning">TABLE DES CATEGORIES :</h3>
+        <a href="ajouter_categorie" class="btn btn-success mt-3 mb-3">Ajouter une catégorie</a>
+        <table id="tableCategorie" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type de catégories</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($tableCategorie as $data){
+                ?>
+                <tr>
+                    <td>ID: <?= $data['id_categorie'] ?></td>
+                    <td><?= $data['type_categorie'] ?></td>
+                    <td>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#supprimer_categorie_admin&id_suppr=<?= $data['id_categorie'] ?>">
+                            Supprimer
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="supprimer_categorie_admin&id_suppr=<?= $data['id_categorie'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>ID = <?= $data['id_categorie'] ?></p>
+                                        <p>Type de cotégorie = <?= $data['type_categorie'] ?></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <a href="supprimer_categorie_admin&id_suppr=<?= $data['id_categorie'] ?>" type="button"
+                                           class="btn btn-primary">Confirmer la suppression</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+
 
     <script>
-
-            $('#tableAnnonce').DataTable({
+            $('#tableAnnonce,#tableRegion,#tableCategorie, #tableUtilisateurs').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
                 }
             });
+
+
     </script>
 
 

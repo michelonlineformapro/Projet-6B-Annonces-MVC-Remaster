@@ -169,7 +169,25 @@ elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilis
     }
 
 
-} elseif ($url === "deconnexion"){
+}elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "ajouter_categorie"){
+    $title = "Annonces -Ajouter une catégorie-";
+    require_once "../vues/administration/ajouter_categorie.php";
+    if(isset($_POST['type_categorie'])){
+        ajouterCatAdmin($_POST['type_categorie']);
+    }
+}
+
+
+elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "supprimer_annonce_admin" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
+    supprimerAnnonceAdmin();
+}elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "supprimer_admin_autilisateur" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
+    supprimerAdminUtilisateur();
+}elseif(isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "supprimer_categorie_admin" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
+    supprimerAdminCategorie();
+}
+
+
+elseif ($url === "deconnexion"){
     require_once "../vues/deconnexion.php";
 }
 
