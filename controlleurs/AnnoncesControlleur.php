@@ -69,3 +69,13 @@ function editerAnnonceParUrilisateur($nom_annonce, $description_annonce, $prix_a
         echo "<p class='alert alert-danger'>Une erreur est survenue durant l'ajout de votre annonce merci de réessayé !</p>";
     }
 }
+
+function rechercheGlobaleMotCle($recherche){
+    $annonce = new Annonces_modele();
+    $results  = $annonce->rechercheAnnonceMotCle($_POST['recherche']);
+    if($results){
+        require_once "../vues/annonces/resultat_recherche_globale.php";
+    }else{
+        echo "<p class='alert alert-danger'>Aucun resultat pour cette recherche</p>";
+    }
+}

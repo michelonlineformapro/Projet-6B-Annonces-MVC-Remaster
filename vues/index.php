@@ -33,17 +33,26 @@ if($url === ""){
 }
 
 /**
- * LES ROUTES
- */
+ ************************************ LES ROUTES *******************************/
+
     //PAGES ACCUEIL
 
 if($url == "accueil"){
     $title = "Annonces -Accueil-";
     afficherLesAnnonces();
 
-    //LES UTILISATEURS -> INSCRIPTION
 
-}elseif ($url == "inscription_utilisateur"){
+
+}elseif ($url == "rechercher"){
+    $title = "Annonces -RECHERCHER-";
+    //require_once "../vues/annonces/resultat_recherche_globale.php";
+    if(isset($_POST['btn-search-name'])){
+        $recherche = $_POST['recherche'];
+        rechercheGlobaleMotCle($recherche);
+    }
+}
+//LES UTILISATEURS -> INSCRIPTION
+elseif ($url == "inscription_utilisateur"){
     $title = "Annonces -Inscription-";
 
     //APPEL DU FORMUALIRE D'INSCRIPTION UTILISATEUR
@@ -83,7 +92,6 @@ if($url == "accueil"){
 
     }
     //FORMULAIRE DE CONNEXION DE UTILISATEUR
-
 }elseif ($url == "connexion_utilisateur"){
     $title = "Annonces -Connexion-";
     //Appel du formulaire de connexion
@@ -103,7 +111,7 @@ if($url == "accueil"){
     afficherDetails();
 }
 
-//AJOUTER UNE ANNONCE
+//AJOUTER UNE ANNONCE POUR UTILISATEUR CONNECTER
 elseif (isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true && $url === "ajouter_annonce"){
 
     $title = "Annonces -Ajouter des annonces-";
@@ -185,7 +193,6 @@ elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === 
 }elseif(isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === true && $url === "supprimer_categorie_admin" && isset($_GET['id_suppr']) && $_GET['id_suppr'] > 0){
     supprimerAdminCategorie();
 }
-
 
 elseif ($url === "deconnexion"){
     require_once "../vues/deconnexion.php";

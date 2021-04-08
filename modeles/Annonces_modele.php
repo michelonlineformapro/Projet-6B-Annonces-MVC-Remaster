@@ -221,4 +221,21 @@ class Annonces_modele extends Database_modele
         return $req;
     }
 
+public function rechercheAnnonceMotCle($recherche){
+        $db = $this->getPDO();
+
+        if(isset($_POST['recherche'])){
+            $recherche = $_POST['recherche'];
+        }else{
+            $recherche = "";
+            if(empty($recherche)){
+                echo "<p class='alert alert-danger'>Merci de remlir le champ de recherche</p>";
+            }
+        }
+
+    $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN  categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE nom_annonce LIKE '%$recherche%' OR description_annonce LIKE '%$recherche%' OR prix_annonce LIKE '%$recherche%' OR type_categorie LIKE '%$recherche%' OR nom_region LIKE '%$recherche%'";
+    $results = $db->query($sql);
+    return $results;
+}
+
 }
