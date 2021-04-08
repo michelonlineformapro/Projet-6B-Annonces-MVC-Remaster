@@ -70,12 +70,24 @@ function editerAnnonceParUrilisateur($nom_annonce, $description_annonce, $prix_a
     }
 }
 
-function rechercheGlobaleMotCle($recherche){
+function rechercheGlobaleMotCle(){
     $annonce = new Annonces_modele();
-    $results  = $annonce->rechercheAnnonceMotCle($_POST['recherche']);
+    $results = $annonce->rechercheAnnonceMotCle();
     if($results){
-        require_once "../vues/annonces/resultat_recherche_globale.php";
+        require "../vues/annonces/resultat_recherche_globale.php";
     }else{
-        echo "<p class='alert alert-danger'>Aucun resultat pour cette recherche</p>";
+        echo "<p class='alert-warning text-center p-2 mt-2'><b>Pas d'annonce pour cette region et cette catégorie</b></p>";
+    }
+
+}
+
+function getAnnonceByCategorieAndRegion(){
+    $annonce = new Annonces_modele();
+    $resultsCR = $annonce->getAnnonceByRegionAndCategorie();
+    if($resultsCR){
+        require_once "../vues/annonces/resultat_recherche_CR.php";
+    }else{
+        echo "<p class='alert-warning text-center p-2 mt-2'><b>Pas d'annonce pour cette region et cette catégorie</b></p>";
     }
 }
+

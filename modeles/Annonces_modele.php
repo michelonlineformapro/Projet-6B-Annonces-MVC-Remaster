@@ -221,21 +221,49 @@ class Annonces_modele extends Database_modele
         return $req;
     }
 
-public function rechercheAnnonceMotCle($recherche){
+public function rechercheAnnonceMotCle(){
         $db = $this->getPDO();
-
+        //Recup de input recherche
         if(isset($_POST['recherche'])){
             $recherche = $_POST['recherche'];
         }else{
             $recherche = "";
             if(empty($recherche)){
-                echo "<p class='alert alert-danger'>Merci de remlir le champ de recherche</p>";
+
+            }
+        }
+        if(!empty($recherche)){
+
+        }
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN  categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE nom_annonce LIKE '%$recherche%' OR description_annonce LIKE '%$recherche%' OR prix_annonce LIKE '%$recherche%' OR type_categorie LIKE '%$recherche%' OR nom_region LIKE '%$recherche%'";
+        return $db->query($sql);
+
+}
+
+    //Afficher les détails de l'annonce par regions et categories
+    public function getAnnonceByRegionAndCategorie(){
+        $db = $this->getPDO();
+
+        //Recup de input recherche
+        if(isset($_POST['categorie_id']) && isset($_POST['region_id'])){
+            $cat = $_POST['categorie_id'];
+            $reg = $_POST['region_id'];
+        }else{
+            $cat = 1;
+            $reg = 1;
+            if(empty($cat) || empty($reg)){
+                echo "<p class='alert-danger mt-2 p-2'>Merci de remplir les champs Catégorie et Région</p>";
             }
         }
 
-    $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN  categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE nom_annonce LIKE '%$recherche%' OR description_annonce LIKE '%$recherche%' OR prix_annonce LIKE '%$recherche%' OR type_categorie LIKE '%$recherche%' OR nom_region LIKE '%$recherche%'";
-    $results = $db->query($sql);
-    return $results;
-}
+
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN  categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE regions_id = ? AND categorie_id = ? ";
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindParam(1, $_POST['region_id']);
+        $stmt->bindParam(2, $_POST['categorie_id']);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

@@ -33,7 +33,7 @@
             <label for="categorie_id">Catégorie de l'annonce :</label>
             <select name="categorie_id" class="form-control">
                 <?php
-                afficherToutesCatégories();
+                afficherToutesCategories();
                 ?>
             </select>
         </div>

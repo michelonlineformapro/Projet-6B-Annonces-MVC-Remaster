@@ -43,13 +43,10 @@ if($url == "accueil"){
 
 
 
-}elseif ($url == "rechercher"){
+}elseif ($url === "rechercher"){
     $title = "Annonces -RECHERCHER-";
-    //require_once "../vues/annonces/resultat_recherche_globale.php";
-    if(isset($_POST['btn-search-name'])){
-        $recherche = $_POST['recherche'];
-        rechercheGlobaleMotCle($recherche);
-    }
+    rechercheGlobaleMotCle();
+    getAnnonceByCategorieAndRegion();
 }
 //LES UTILISATEURS -> INSCRIPTION
 elseif ($url == "inscription_utilisateur"){

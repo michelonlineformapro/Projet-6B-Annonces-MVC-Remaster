@@ -3,7 +3,7 @@ require_once "../modeles/Categories_modele.php";
 
 //Fonction a appeler depuis la vue ajouter_annonces.php
 
-function afficherToutesCatégories(){
+function afficherToutesCategories(){
     $categorie = new Categories_modele();
     $listeCategorie = $categorie->afficherCategorie();
     ?>
