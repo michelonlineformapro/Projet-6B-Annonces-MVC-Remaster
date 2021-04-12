@@ -2,6 +2,7 @@
 require_once '../modeles/EmailInscriptionModele.php';
 require_once '../modeles/Utilisateur_modele.php';
 
+//Envoi email lors de inscription
 function envoiEmailInscription(){
     //Instance de la classe email
     $email = new EmailInscriptionModele();
@@ -9,14 +10,31 @@ function envoiEmailInscription(){
     return $envoiEmail;
 }
 
-//Coonecter un utilisateur
+//Connecter un utilisateur
 
 function connexionDeUtilisateur(){
     //Instance du model utilisateur
     $utilisateur = new Utilisateur_modele();
     $connecter_utilisateur = $utilisateur->connecterUnUtilisateur();
+    return $connecter_utilisateur;
 
 }
+
+//Lister tous les utilisateurs
+function afficherUtilisateurJson(){
+    $utilisateur = new Utilisateur_modele();
+    $afficherUtilisateur = $utilisateur->utilisateurs();
+    require_once "../vues/users.php";
+}
+
+function afficherUtilisateurParId($id){
+    $utilisateur = new Utilisateur_modele();
+    $afficherUtilisateurID = $utilisateur->utilisateurParId($_GET['id']);
+}
+
+
+
+
 
 
 

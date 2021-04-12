@@ -9,6 +9,17 @@ body{
     font-family: 'Oswald', sans-serif;
 }
 
+/**************************MENU NAV BAR********************/
+#logo{
+    box-shadow: 2px 2px 2px #999999;
+}
+.navbar{
+    border: none;
+    border-bottom: solid 1px #999999;
+    margin: 20px;
+
+}
+
 /******************TABLEAU DE BORD UTILISATEUR************************/
 #user-dashboard{
     background-color: #016b90!important;

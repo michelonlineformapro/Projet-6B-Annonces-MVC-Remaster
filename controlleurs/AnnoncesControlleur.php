@@ -4,13 +4,18 @@ require_once "../modeles/Annonces_modele.php";
 
 //POUR LES VISITEURS//////
 function afficherLesAnnonces(){
-
     //Instance de la classe Annonce
     $annonce = new Annonces_modele();
-    //stock dansune variable l'appel de la methode conernée
+    //stock dansune variable l'appel de la methode concernée
     $recupAnnonce = $annonce->afficherToutesAnnonces();
     require_once "../vues/accueil.php";
+}
 
+function afficherAnnoncesJson(){
+    //Instance de la classe Annonce
+    $annonce = new Annonces_modele();
+    $recupAnnonce = $annonce->annoncesJson();
+    require_once "../vues/accueil.php";
 
 }
 
@@ -90,4 +95,15 @@ function getAnnonceByCategorieAndRegion(){
         echo "<p class='alert-warning text-center p-2 mt-2'><b>Pas d'annonce pour cette region et cette catégorie</b></p>";
     }
 }
+
+function annoncePDF($id){
+    $annonce = new Annonces_modele();
+    $id = $_GET['id'];
+    $afficherPDF = $annonce->pdfExportParId($_GET['id']);
+    return $afficherPDF;
+}
+
+
+
+
 

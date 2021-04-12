@@ -16,8 +16,8 @@ class Utilisateur_modele extends Database_modele
     public function utilisateurs(){
         $db = $this->getPDO();
         $sql = "SELECT *  FROM utilisateurs";
-        $users = $db->query($sql);
-        return $users;
+        $utilisateur = $db->query($sql);
+        return $utilisateur;
     }
 
     public function utilisateurParId($id){
@@ -76,4 +76,5 @@ class Utilisateur_modele extends Database_modele
 
 
     }
+
 }

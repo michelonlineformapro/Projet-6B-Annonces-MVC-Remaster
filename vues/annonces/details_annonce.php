@@ -19,14 +19,31 @@
             <?php
             if(isset($_SESSION['connecter_utilisateur']) && $_SESSION['connecter_utilisateur'] === true){
                 ?>
-                <a href="gestion_annonces" type="button" class="btn btn-outline-warning">Retour</a>
+                <a href="gestion_annonces" type="button" class="btn btn-outline-warning mt-3">Retour</a>
                 <?php
             }else{
                 ?>
-                <a href="accueil?page=1" type="button" class="btn btn-outline-warning">Retour</a>
+                <a href="accueil?page=1" type="button" class="btn btn-outline-warning mt-3">Retour</a>
                 <?php
             }
 
+
+            if(isset($_SESSION['connecter_user']) && $_SESSION['connecter_user'] === true ){?>
+            <a href="acheter&id=<?= $details['utilisateur_id'] ?>" class="btn btn-info mt-3">Acheter</a>
+            <?php
+            }else{
             ?>
+            <a href="connexion_utilisateur&id=<?= $details['utilisateur_id'] ?>" class="btn btn-info mt-3">Acheter</a>
+            <?php
+            }
+            ?>
+
+
+            <a onclick="changeText()"  class="btn btn-success mt-3 num_vendeur">Voir me numéro du vendeur</a>
+
+            <a href="messageVendeur&id=<?= $details['utilisateur_id'] ?>" class="btn btn-primary mt-3">Message</a>
+
+            <a target="_blank" href="pdf&id=<?= $details['id_annonce'] ?>" class="btn btn-warning mt-3">Annonce en PDF</a>
+
         </div>
     </div>

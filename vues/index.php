@@ -43,10 +43,15 @@ if($url == "accueil"){
 
 
 
-}elseif ($url === "rechercher"){
+}elseif ($url == "utilisateurs"){
+    afficherUtilisateurJson();
+}
+
+elseif ($url === "rechercher"){
     $title = "Annonces -RECHERCHER-";
     rechercheGlobaleMotCle();
     getAnnonceByCategorieAndRegion();
+
 }
 //LES UTILISATEURS -> INSCRIPTION
 elseif ($url == "inscription_utilisateur"){
@@ -193,6 +198,10 @@ elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === 
 
 elseif ($url === "deconnexion"){
     require_once "../vues/deconnexion.php";
+
+}elseif ($url == "pdf" & isset($_GET['id']) && $_GET['id'] > 0){
+    $id = $_GET['id'];
+    annoncePDF($_GET['id']);
 }
 
 

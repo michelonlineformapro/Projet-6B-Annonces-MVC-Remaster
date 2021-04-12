@@ -47,7 +47,10 @@ class Annonces_modele extends Database_modele
 
 
         ?>
-        <div class="jumbotron justify-content-center">
+        <div class="text-center">
+            <img width="10%" src="public/img/logo.png" alt="Annonces.com" title="Annonce.com">
+        </div>
+        <div class="d-flex flex-row justify-content-center mt-5">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <?php
@@ -74,6 +77,15 @@ class Annonces_modele extends Database_modele
         <?php
 
         return $stmt;
+    }
+
+    ///////////////////////////////AFFICHER TOUTES LES ANNONCES AU FORMAT JSON/////////////////
+    public function annoncesJson(){
+        $db = $this->getPDO();
+        //Requète SQL + limite
+        $sql = "SELECT * FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions";
+        $json = $db->query($sql);
+        return $json;
     }
 
     /////////////////////////////////////POUR LES UTILISATEURS INSCRITS//////////////////////////////////
@@ -264,6 +276,58 @@ public function rechercheAnnonceMotCle(){
         $stmt->bindParam(2, $_POST['categorie_id']);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    //Export d'une annonce en pdf
+    public function pdfExportParId($annonceID){
+        ob_get_clean();
+        //Instance de la classe
+        require "../public/FPDF/fpdf.php";
+        $db = $this->getPDO();
+        $query = "SELECT *  FROM annonces INNER JOIN utilisateurs ON annonces.utilisateur_id = utilisateurs.id_utilisateur INNER JOIN  categories ON annonces.categorie_id = categories.id_categorie INNER JOIN regions ON annonces.regions_id = regions.id_regions WHERE id_annonce = ?";
+        $req = $db->prepare($query);
+        $req->execute(array($annonceID));
+        $details_annonces = $req->fetch();
+
+        $this->nom_annonce = $details_annonces['nom_annonce'];
+        $this->description_annonce = $details_annonces['description_annonce'];
+        $this->prix_annonce = $details_annonces['prix_annonce'];
+        $this->photo_annonce = $details_annonces['photo_annonce'];
+        $this->categorie_id = $details_annonces['type_categorie'];
+        $this->utilisateur_id = $details_annonces['nom_utilisateur'];
+        $this->region_id = $details_annonces['nom_region'];
+
+        $pdf = new FPDF();
+        //Sortie
+        $pdf->AddPage();
+        //Header
+        $pdf->Image('../public/img/logo-mini.png');
+
+        $pdf->SetFont('Arial','B',16);
+        $pdf->Cell(40,10,'Votre annonces : ');
+        $pdf->Ln(10);
+        $pdf->Cell(190,10, iconv('UTF-8', 'ISO-8859-2', 'Nom du annonce : '.$this->nom_annonce));
+
+        $pdf->Ln(10);
+        $pdf->Image(''.$details_annonces['photo_annonce'], 100, 120, 100,100);
+
+
+        $pdf->Ln(10);
+        $pdf->SetFont('Arial','',12);
+        $pdf->MultiCell(190,10,'Description de l\'annonce : '.utf8_decode($this->description_annonce), 1, 'J');
+        $pdf->Ln(10);
+        $pdf->Cell(190,10,'Prix du produit : '.$this->prix_annonce. ' EUROS');
+        $pdf->Ln(10);
+        $pdf->Cell(190,10,iconv('UTF-8', 'ISO-8859-2', 'Catégorie : '.$this->categorie_id));
+        $pdf->Ln(10);
+        $pdf->Cell(190,10,'Nom du vendeur : '.$this->utilisateur_id);
+        $pdf->Ln(10);
+        $pdf->Cell(190,10,iconv('UTF-8', 'ISO-8859-2', 'Région : '.$this->region_id));
+        $pdf->Ln(10);
+        //$pdf->AddLink("http://localhost/bon_coin_mic/region&id=3");
+
+
+        $pdf->Output('','annonces.pdf',true);
     }
 
 }
