@@ -96,6 +96,8 @@ function getAnnonceByCategorieAndRegion(){
     }
 }
 
+
+
 function annoncePDF($id){
     $annonce = new Annonces_modele();
     $id = $_GET['id'];

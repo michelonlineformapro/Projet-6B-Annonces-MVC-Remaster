@@ -204,6 +204,10 @@ elseif ($url === "deconnexion"){
 }elseif ($url === "email_vendeur"){
     $title = "Annonce -CONTACTER UN VENDEUR";
     afficherUtilisateurParID($_GET['id']);
+}elseif ($url === "region"){
+    $title = "Annonce -ANNONCE PAR REGION-";
+    $id = $_GET['id'];
+    annonceParRegion($_GET['id']);
 }
 
 

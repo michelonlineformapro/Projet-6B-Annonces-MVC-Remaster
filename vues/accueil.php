@@ -1,5 +1,14 @@
-
-
+    <!--CARTE DE FRANCE ET RECHERCHE PAR REGION -->
+    <div class="container-fluid text-center mt-3">
+        <h2 class="text-center text-danger">Votre région :</h2>
+        <link rel="stylesheet" href="public/carte/cmap/style.css">
+        <script src="public/carte/cmap/jquery-1.11.1.min.js"></script>
+        <script src="public/carte/cmap/France-map.js"></script>
+        <script>
+            francefree();
+        </script>
+    </div>
+    <!-- AFFICHER ANNONCES RANDOM + PAGINATION -->
     <div class="row mt-3">
         <?php
         foreach ($recupAnnonce as $data) {

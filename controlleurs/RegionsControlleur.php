@@ -14,3 +14,13 @@ function listerRegions(){
     }
     return $afficher_region;
 }
+
+function annonceParRegion($id){
+    $region = new Regions_modele();
+    $annonceParRegion = $region->afficherAnnonceParRegion($_GET['id']);
+    if($annonceParRegion){
+        require_once '../vues/annonces/resultat_recherche_region.php';
+    }else{
+        echo "<p class='alert-warning text-center p-2 mt-2'><b>Pas d'annonce pour cette region</b></p>";
+    }
+}
