@@ -278,7 +278,6 @@ public function rechercheAnnonceMotCle(){
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Export d'une annonce en pdf
     public function pdfExportParId($annonceID){
         ob_get_clean();
         //Instance de la classe
@@ -297,7 +296,7 @@ public function rechercheAnnonceMotCle(){
         $this->utilisateur_id = $details_annonces['nom_utilisateur'];
         $this->region_id = $details_annonces['nom_region'];
 
-        $pdf = new FPDF();
+        $pdf = new FPDF('P','mm','A4');
         //Sortie
         $pdf->AddPage();
         //Header

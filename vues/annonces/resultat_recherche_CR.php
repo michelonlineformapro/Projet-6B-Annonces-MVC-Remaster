@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                        <a href="messageVendeur&id=<?= $row['utilisateur_id'] ?>" class="btn btn-primary mt-3">Message</a>
+                        <a href="email_vendeur&id=<?= $row['utilisateur_id'] ?>" class="btn btn-primary mt-3">Message</a>
 
                         <a target="_blank" href="pdf&id=<?= $row['id_annonce'] ?>" class="btn btn-warning mt-3">Annonce en PDF</a>
                     </div>

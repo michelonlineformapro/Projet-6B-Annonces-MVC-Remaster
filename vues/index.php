@@ -198,10 +198,12 @@ elseif (isset($_SESSION['connecter_admin']) && $_SESSION['connecter_admin'] === 
 
 elseif ($url === "deconnexion"){
     require_once "../vues/deconnexion.php";
-
-}elseif ($url == "pdf" & isset($_GET['id']) && $_GET['id'] > 0){
+}elseif ($url === "pdf" & isset($_GET['id']) && $_GET['id'] > 0){
     $id = $_GET['id'];
     annoncePDF($_GET['id']);
+}elseif ($url === "email_vendeur"){
+    $title = "Annonce -CONTACTER UN VENDEUR";
+    afficherUtilisateurParID($_GET['id']);
 }
 
 

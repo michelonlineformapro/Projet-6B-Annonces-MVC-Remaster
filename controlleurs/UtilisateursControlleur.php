@@ -27,10 +27,13 @@ function afficherUtilisateurJson(){
     require_once "../vues/users.php";
 }
 
-function afficherUtilisateurParId($id){
+function afficherUtilisateurParID($id){
     $utilisateur = new Utilisateur_modele();
-    $afficherUtilisateurID = $utilisateur->utilisateurParId($_GET['id']);
+    $afficherUtilisateurParId = $utilisateur->utilisateurParId($_GET['id']);
+    require_once '../vues/utilisateurs/email_vendeur.php';
+    return $afficherUtilisateurParId;
 }
+
 
 
 
